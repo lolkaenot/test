@@ -1,39 +1,28 @@
 <?php
-require __DIR__ . '/model/news.php';
+require __DIR__ . '/model/classNews.php';
 
 /** Добавление */
 if (isset($_GET['add'])) {
-    if (isset($_POST['add'])) {
-        news_add($_POST['title'], $_POST['article']);
-        header('Location: index.php');
-        die;
-    }
     include __DIR__ . '/view/add.php';
 }
 
 /** Редактирование */
 if (isset($_GET['edit'])) {
-    $arr = news_get($_GET['edit']);
-
-    if (isset($_POST['edit'])) {
-        news_edit($_GET['edit'],$_POST['title'], $_POST['article']);
-        header('Location: index.php');
-        die;
-    }
-
+    $news=new News($_GET['edit']);
     include __DIR__ . '/view/edit.php';
 }
 
 /** Удаление */
 if (isset($_GET['del'])) {
-    news_delete($_GET['del']);
+    $news=new News($_GET['del']);
+    $news->deleteNews();
     header('Location: index.php');
     die;
 }
 
 /** Показ  */
 if (isset($_GET['art'])) {
-    $arr = news_get($_GET['art']);
+    $news=new News($_GET['art']);
     include __DIR__ . '/view/article.php';
 }
 

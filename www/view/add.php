@@ -6,12 +6,12 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="function/processing.php" method="post">
         Заголовок статьи:<br>
         <input type="text" name="title"><br>
         Содержание:<br>
-        <textarea name="article" rows="10"></textarea><br>
-        <input type="submit" name="add" value="добавить">
+        <textarea name="text" rows="10"></textarea><br>
+        <input type="submit" name="add" value="Добавить">
     </form>
 
 </body>

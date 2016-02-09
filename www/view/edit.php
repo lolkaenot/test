@@ -6,14 +6,13 @@
     <title>Title</title>
 </head>
 <body>
-<?php foreach($arr as $a):?>
-<form action="" method="post">
+<form action="function/processing.php" method="post">
+    <input type="hidden" name="id" value="<?=$news->getId();?>">
     Заголовок статьи:<br>
-    <input type="text" name="title" value="<?=$a['title'];?>"><br>
+    <input type="text" name="title" value="<?=$news->getTitle();?>"><br>
     Содержание:<br>
-    <textarea name="article" rows="10" ><?=$a['article'];?></textarea><br>
+    <textarea name="text" rows="10" ><?=$news->getText();?></textarea><br>
     <input type="submit" name="edit" value="добавить">
 </form>
-<?php endforeach;?>
 </body>
 </html>

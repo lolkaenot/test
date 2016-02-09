@@ -1,2 +1,3 @@
 <?php
-phpinfo();
+$test = date("d.m.y");
+echo $test;

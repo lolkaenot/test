@@ -10,7 +10,7 @@ function news_getAll(){
 
 /** Удалить новость по ее id */
 function news_delete($id){
-    $str = 'DELETE FROM news WHERE id=' . $id;
+    $str = "DELETE FROM news WHERE id='" . $id . "'";
     sql_request($str);
 }
 
@@ -24,8 +24,14 @@ function news_add($title, $article){
 
 /** Изменить новость по ее id */
 function news_edit($id, $title, $article){
+    $date = date("Y.m.d H:i:s");
     $str = "UPDATE news
-            SET title='" . $title . "', article='" . $article . "'
+            SET date='" . $date . "', title='" . $title . "', article='" . $article . "'
             WHERE id='". $id . "'";
     sql_request($str);
+}
+function news_get($id){
+
+    $str = "SELECT * FROM news WHERE id='" . $id . "'";
+    return sql_getAll($str);
 }

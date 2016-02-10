@@ -1,6 +1,10 @@
 <?php
-require __DIR__ . '/model/classNews.php';
+require __DIR__ . '/autoload.php';
 
-$arrNews = News::getAllNews();
+$cont = isset($_GET['cont']) ? $_GET['cont'] : 'news';
+$act = isset($_GET['act']) ? $_GET['act'] : 'All';
 
-include __DIR__ . '/view/index.php';
+$contName = 'Controller' . $cont;
+$controller = new $contName;
+$method = 'action' . $act;
+$controller->$method();

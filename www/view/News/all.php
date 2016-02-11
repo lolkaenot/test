@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <?php foreach ($this->data as $new):?>
+    <?php foreach ($news as $new):?>
             <a href="index.php?act=One&id=<?=$new->id;?>"><h1><?= $new->title; ?></h1></a><br>
             <p><?= substr($new->text,0,150)?>
                 <?php if(strlen($new->text)>150):?>

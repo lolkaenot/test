@@ -25,6 +25,7 @@ class Base {
 
 
     }
+
 //    public function getAllEntry($str,$class='stdClass') {
 //        $res = mysqli_query($this->link,$str);
 //        if ($res === false) {

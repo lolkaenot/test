@@ -14,6 +14,14 @@ abstract class AbsModel{
         return $this->data[$name];
     }
 
+    /** Перенаправление на Добавление, либо Обновление по наличию id */
+    public function save() {
+        if (isset($this->data['id'])) {
+            self::updateById();
+        }else {
+            self::add();
+        }
+    }
     /** Получить все записи отсоритированные в обратном порядке */
     static public function getAllReverseSort($sortItem){
         $class = get_called_class();
@@ -41,41 +49,44 @@ abstract class AbsModel{
     }
 
     /** Добавить запись */
-    public function add() {
+    protected function add() {
         $cols= array_keys($this->data);
         $ins = [];
         foreach ($cols as $col) {
             $ins[':' . $col]=$this->data[$col];
         }
-        $str = 'INSERT INTO ' . static::$table . '( ' . implode(', ', $cols) . ')
-            VALUES (' . implode(', ', array_keys($ins)) . ')';
+        $str = 'INSERT INTO ' . static::$table .
+                '( ' . implode(', ', $cols) . ')
+                VALUES
+                (' . implode(', ', array_keys($ins)) . ')';
 
         $bd = new Base();
         $bd->sql_execute($str, $ins);
     }
 
     /** Изменить запись */
-    public function editById() {
+    protected function updateById() {
         $cols= array_keys($this->data);
         $ins = [];
-        $dr = [];
+        $params = [];
         foreach ($cols as $col) {
             if ($col == 'id') {
-                $dr[':' . $col]=$this->data[$col];
+                $params[':' . $col]=$this->data[$col];
                 continue;
             }
             $ins[]=$col . '=:' . $col;
-            $dr[':' . $col]=$this->data[$col];
+            $params[':' . $col]=$this->data[$col];
         }
         $str = 'UPDATE ' . static::$table . ' SET ' . implode(', ', $ins) . ' WHERE id=:id';
         $bd = new Base();
-        $bd->sql_execute($str, $dr);
+        $bd->sql_execute($str, $params);
     }
 
     /** Поиск по заданной записи */
     static public function findByColumn($column, $value) {
         $class = get_called_class();
-        $str = 'SELECT * FROM ' . static::$table . ' WHERE ' . $column . '=:' . $column;
+        $str = 'SELECT * FROM ' . static::$table .
+                ' WHERE ' . $column . '=:' . $column;
         $bd = new Base();
         $bd->setClassName($class);
         return $bd->sql_query($str , [':' . $column => $value]);
